@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Snake</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="vue.js"></script>
+    <script src="snake.js"></script>
+    <script src="autoPlay.js"></script>
+</head>
+<body>
+<div id="gameBar">
+
+    <div id="gameWindow" :style="'width: '+ width * 5 +'px;height: '+ height * 5 +'px'">
+        <div class="line" v-for="line in map">
+            <div class="item" v-for="item in line" :coordinate="item" :class="whatIsThis(item)"></div>
+        </div>
+    </div>
+    <div style="text-align: center">
+        <button v-if="dead" onclick="location.reload()">重新开始</button>
+        <button v-if="dead == false" @click="gameStart()">开始</button>
+        <button v-if="dead == false" @click="gamePause()">暂停</button>
+    </div>
+
+    <div class="pad" :style="'width: '+ width * 5 +'px'">
+        <div>分数：{{ snake.length - 7 }}</div>
+        <div v-if="dead">Game over</div>
+    </div>
+
+</div>
+<script src="game.js"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+
+#gameWindow {
+    border: 1px dashed #999;
+    margin: 20px auto;
+}
+
+.line {
+    overflow: hidden;
+}
+
+.item {
+    width: 5px;
+    height: 5px;
+    float: left;
+}
+
+.snakeHead {
+    background: #FF0000;
+}
+
+.snakeBody {
+    background: #01AAED;
+}
+
+.snakeFood {
+    background: #1bd41b;
+}
+
+.obstacle {
+    background: #8e8e8e;
+}
+
+.pad {
+    margin: 20px auto;
+}
