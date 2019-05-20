@@ -16,7 +16,9 @@
 
     <div id="gameWindow" :style="'width: '+ width * 5 +'px;height: '+ height * 5 +'px'">
         <div class="line" v-for="line in map">
-            <div class="item" v-for="item in line" :coordinate="item" :class="whatIsThis(item)"></div>
+            <div class="item" v-for="item in line"
+                 :coordinate="item"
+                 :class="whatIsThis(item)"></div>
         </div>
     </div>
     <div style="text-align: center">

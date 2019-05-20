@@ -14,13 +14,13 @@ const snake = new Vue({
     },
     methods: {
         whatIsThis: function (item) {
-            if (this.obstacle.indexOf(item) != -1) {
+            if (this.obstacle.indexOf(item) >= 0) {
                 return 'obstacle'
             }
-            if (this.food.indexOf(item) != -1) {
+            if (this.food.indexOf(item) >= 0) {
                 return 'snakeFood'
             }
-            if (this.snake.indexOf(item) != -1) {
+            if (this.snake.indexOf(item) >= 0) {
                 return item == this.head ? 'snakeHead' : 'snakeBody'
             }
         },

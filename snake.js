@@ -18,9 +18,9 @@ function Snake(Game) {
 
     // 初始化蛇
     for (let body = 1; body <= length; body++) {
-        Game.snake.push([1, body].join('-'))
+        Game.snake.unshift([1, body].join('-'))
     }
-    Game.head = Game.snake[length - 1];
+    Game.head = Game.snake[0];
 
     // 初始化食物
     for (let food = 0; food < 1; food++) {
@@ -120,18 +120,18 @@ function Snake(Game) {
     function snakeMove() {
         const head = Game.head.split('-');
 
-        Game.direction = autoPlay(Game); // 使用自动移动函数更变 direction 的值
+        autoPlay(Game); // 使用自动移动函数更变 direction 的值
 
         // 根据新的 direction 值定位下一步头的坐标
         // PS: direction 的值是根据键盘方向键的键值设计的，因为最初这只是一个贪吃蛇小游戏 demo ^_^
         switch (Game.direction) {
-            case 37: // right
+            case 37: // left
                 head[1]--;
                 break;
             case 38: // up
                 head[0]--;
                 break;
-            case 39: // left
+            case 39: // right
                 head[1]++;
                 break;
             case 40: // down
@@ -156,11 +156,11 @@ function Snake(Game) {
         } else {
             // 在还没吃到食物的状态，每次头部移动到下一个坐标时，只是会在身体坐标列表里新增一个坐标
             // 相当于蛇变长了一格，所以要移除身体的最后一个坐标【削掉尾巴】
-            Game.snake.splice(0, 1)
+            Game.snake.splice(Game.snake.length - 1, 1)
         }
 
         // 在身体坐标里新增下一步的坐标
-        Game.snake.push(nextHead);
+        Game.snake.unshift(nextHead);
         Game.head = nextHead
     }
 
