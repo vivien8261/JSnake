@@ -15,16 +15,16 @@ function autoPlay(Game) {
     };
 
     // 蛇的视野，即头部正前方横排的三个点，按照目前的方向分为 [上, 下, 中] 或 [左, 右, 中] 两种集合
-    let antenna = (function (direction) {
+    let scan = (function (direction) {
         switch (direction) {
             case 37: // left
-                return [[x - 1, y - 1], [x + 1, y - 1], [x, y - 1]];
+                return [[x - 1, y - 1], [x + 1, y - 1], [x, y - 1], 'l'];
             case 38: // up
-                return [[x - 1, y - 1], [x - 1, y + 1], [x - 1, y]];
+                return [[x - 1, y - 1], [x - 1, y + 1], [x - 1, y], 'r'];
             case 39: // right
-                return [[x - 1, y + 1], [x + 1, y + 1], [x, y + 1]];
+                return [[x - 1, y + 1], [x + 1, y + 1], [x, y + 1], 'u'];
             case 40: // down
-                return [[x + 1, y - 1], [x + 1, y + 1], [x + 1, y]];
+                return [[x + 1, y - 1], [x + 1, y + 1], [x + 1, y], 'd'];
         }
     })(Game.direction);
 
@@ -32,15 +32,20 @@ function autoPlay(Game) {
     // 这时候，蛇也不知道自己有没有已经绕出死胡同啊，那么就往看到的身体的反方向拐弯就行了
 
     // 得到【上下】或【左右】在身体里的索引值，因为添加身体时使用的是【unshift】，所以索引大的一端是反方向
-    let ai = Game.snake.indexOf(antenna[0].join('-'));
-    let bi = Game.snake.indexOf(antenna[1].join('-'));
-    let ci = Game.snake.indexOf(antenna[2].join('-'));
-    if (ai >= 0 && bi >= 0 && ci >= 0) {
-        // 区分纵向和横向移动，从头部四周的点里删除正方向的坐标
-        if (antenna[0][0] == antenna[1][0]) {
-            ai > bi ? delete around.r : delete around.l
+    let ai = Game.snake.indexOf(scan[0].join('-'));
+    let bi = Game.snake.indexOf(scan[1].join('-'));
+    let ci = Game.snake.indexOf(scan[2].join('-'));
+    if (ai >= 0 && bi >= 0) {
+        if (ci >= 0) {
+            // 区分纵向和横向移动，从头部四周的点里删除正方向的坐标
+            if (scan[0][0] == scan[1][0]) {
+                ai > bi ? delete around.r : delete around.l
+            } else {
+                ai > bi ? delete around.d : delete around.u
+            }
         } else {
-            ai > bi ? delete around.d : delete around.u
+            // 如果正前方没有身体，有可能是个 U 型凹槽，不要进去
+            // delete around[scan[3]]
         }
     }
 
