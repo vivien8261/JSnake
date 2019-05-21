@@ -1,5 +1,5 @@
 /**
- * 自动寻路逻辑，受 A* 算法的启发而编写
+ * 自动寻路逻辑，基于启发式算法 A* 改编
  */
 function autoPlay(Game) {
     let head = Game.head.split('-');
